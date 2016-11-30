@@ -1,0 +1,108 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+        <script src="jquery-3.1.1.js"></script>
+
+		<title>Testing circuler movement </title>
+        <style type="text/css"> 
+            
+        
+        </style>
+	</head>
+	<body>
+        <div id="container" style="display:inline-block">
+            <img id="flyingCat" src="imgs/cat.gif" alt="Alternate Text"/>
+            <img id="origin" src="imgs/cat.gif" alt="Alternate Text"/>
+        </div>
+        <input type="button" name="name" value="Start" id="start"/>
+        <input type="button" name="name" value="stop" id="stop"/>
+        <script type="text/javascript">
+            (function (w) {
+                    var containerWidth = $('#container').width();
+                    var containerheight = $('#container').height();
+
+                function init() {
+                    $('#container').css({
+                        'width': '90%',
+                        'height': '80%',
+                        'padding': '5px',
+                        'margin': '5px',
+                        'border': 'solid',
+                        'border-color': 'brown',
+                        'border-width': 'thin'
+                    }); //#container 
+                   
+                   
+                     $('#origin').css({
+                        'position': 'relative',
+                        'top':(containerheight/2)+'px',
+                        'left':(containerWidth/2)+'px',
+                             
+                    }); //#container
+                    $('#flyingCat').css({
+                        'top': (containerheight/2)+'px',
+                        'left': '600px',
+                        'position': 'relative'
+                    });
+                }//init 
+                init();
+
+
+
+
+
+
+
+                function moveKitty() {
+                  console.log("move");
+                  var fCat = $('#flyingCat');
+                  var cPos = fCat.position();
+
+                  if(cPos.left<$('#container').width()-100  )
+                  {
+                  var newleft=parseInt(cPos.left)+(.3*parseInt(cPos.left));
+                  $('#flyingCat').animate({left:newleft+'px'},{ duration: 500, queue: false ,complete:moveKitty});
+                  }
+                  else{
+                  $('#flyingCat').animate({left:20+'px'}, { duration: 500, queue: false ,complete:moveKitty});
+                  }
+                }
+                
+                $('#start').click(function () {
+                moveKitty();
+                }//startclick function 
+                );//start click 
+                
+                $('#stop').click(function () {
+                $('#flyingCat').stop();
+                }//startclick function 
+                );//start click 
+            
+                //moveKitty();
+
+              var k = w.onkeydown = function () {
+                    switch (this.event.key) {
+
+                        case "ArrowDown":
+                            
+                            var nleft=parseInt($('#flyingCat').position().left-100);
+                            //console.log(nl);
+                            $('#flyingCat').css({'top':nleft+'px'});
+                            console.log(nleft);
+                            break; 
+
+                        case "ArrowUp":
+                            var nleft=parseInt($('#flyingCat').position().left+100);
+                            $('#flyingCat').css({'top':nleft+'px'});
+                            console.log(nleft);
+
+                            break;
+                         }//end sitch 
+                    }//end Key down event 
+                 var animator= (function(){
+                 
+                 })();//animator 
+            })(window);
+        </script>
+	</body>
+</html>
