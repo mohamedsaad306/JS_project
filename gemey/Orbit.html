@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="css/style.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/jquery-3.1.1.js"></script>
+    <!--<script src="js/main.js"></script>-->
+</head>
+<body>
+    <div id="containerId" class="container" >
+
+        
+        
+        
+    </div>
+
+    <script>
+        
+        $(document).ready(function () {
+
+            //------------ BaseComponent Class
+            function BaseComponent() {
+                this.Position = { "X":0, "Y": 0 };
+                this.ClassUniqu = "";        //ClassUniqu will represented in css as (<div class="classType_indexOfArrary">)
+                this.LifeTime = 1;
+                this.Type = ""; // (player,Enemy,Health) reserved
+                this.Radious = 0;
+                this.Direction = 0;    //1:clockwise   -1:anticlockwise    0:sleep
+                this.ClassType=""
+                this.Create = function () {
+                    //append to container new div  
+                    //css:classType(myship-movalbeEnemy-sleepHealth-...etc) depend on caller Object
+                    //classUniqu this.position in css
+                    debugger;
+                    var newDiv = document.createElement("div");
+                    $(newDiv).css("class", this.ClassType).css("class", this.ClassUniqu); //add attr 'id' to new div
+                    newDiv.style.left = this.Position.X+"px";
+                    newDiv.style.top = this.Position.Y + "px";
+                    console.log(newDiv);
+                    document.getElementById("containerId").appendChild(newDiv);
+                    //$("#containerId").append(newDiv);
+                }
+                this.Destory = function () {
+                    //delet object from memroy 
+                    delete this;
+                    //remove div element by classUniqu
+                }
+            }
+
+            //--------------------------- MyShip Class
+            function MyShip(_x, _y, _classUniqu, _id, _lifeTime, _type, _direction) {
+                this.Position.X = _x;
+                this.Position.Y = _y;
+                this.ClassUniqu = "myship";   //constant class in css
+                this.LifeTime = _lifeTime;
+                this.Type = "player"; //reserved
+                this.Radious = _radius;
+                this.Direction = _direction;
+                this.ClassType="";
+                this.DetectCollistion = function () {
+                    console.log("my ship just hit Object");
+                }
+            } MyShip.prototype = new BaseComponent;
+
+            //--------------------------- Enemy Classes
+            //-------------Sleep Enemy Class
+            function SleepEnemy(_x, _y, _index, _lifeTime, _radius, _direction) {
+                this.Position.X = _x;
+                this.Position.Y = _y;
+                this.ClassUniqu = "sleepEnemy" + _index;
+                this.LifeTime = _lifeTime;
+                this.Type = "Enemy";//reserved
+                this.Radious = _radius;
+                this.Direction = 0;
+                this.ClassType="";
+                this.Rotat = function () {
+                    // I thing rotation will be done by css to all sleep enemies ex: class="sleepEnemy"
+                }
+            } SleepEnemy.prototype = new BaseComponent;
+            //-------------Movable Enemy Class
+            function MovableEnemy(_x, _y, _index, _lifeTime, _radius, _direction) {
+                this.Position.X = _x;
+                this.Position.Y = _y;
+                this.ClassUniqu = "movableEnemy" + _index;
+                this.LifeTime = _lifeTime;
+                this.Type = "Enemy";//reserved
+                this.Radious = _radius;
+                this.Direction = _direction;
+                this.ClassType="";
+                this.Move = function () {
+                    //will move in virsual circle randomly
+                }
+            } MovableEnemy.prototype = new BaseComponent;
+            //-------------Tracker Enemy Class
+            function TrackerEnemy(_x, _y, _index, _lifeTime, _radius, _direction) {
+                this.Position.X = _x;
+                this.Position.Y = _y;
+                this.ClassUniqu = "trackerEnemy" + _index;
+                this.LifeTime = _lifeTime;
+                this.Type = "Enemy";//reserved
+                this.Radious = _radius;
+                this.Direction = _direction;
+                this.ClassType="";
+                this.TrackShipPlayer = function () {
+                    //will track ship player in constant speed
+                }
+            } TrackerEnemy.prototype = new BaseComponent;
+
+            //--------------------------- Health Classes
+            //-------------Sleep Health Class
+            function SleepHealth(_x, _y, _index, _lifeTime, _radius, _direction) {
+                this.Position.X = _x;
+                this.Position.Y = _y;
+                this.ClassUniqu = "sleepHealth" + _index;
+                this.LifeTime = _lifeTime;
+                this.Type = "Health";//reserved
+                this.Radious = _radius;
+                this.Direction = 0;
+                this.ClassType = "healthcircle";
+                this.Rotat = function () {
+                    // I thing rotation will be done by css to all sleep Health ex: class="sleepHealth"
+                }
+            } SleepHealth.prototype = new BaseComponent;
+            //-------------Movable Health Class
+            function MovableHealth(_x, _y, _index, _lifeTime, _radius, _direction) {
+                this.Position.X = _x;
+                this.Position.Y = _y;
+                this.ClassUniqu = "movableHealth" + _index;
+                this.LifeTime = _lifeTime;
+                this.Type = "Health";//reserved
+                this.Radious = _radius;
+                this.Direction = _direction;
+                this.ClassType="";
+                this.Move = function () {
+                    //will move in spiral move to center same way of myShip object
+                }
+            } MovableHealth.prototype = new BaseComponent;
+            //-------------Triangle Health Class
+            function TriangleHealth(_x, _y, _index, _lifeTime, _radius, _direction) {
+                this.Position.X = _x;
+                this.Position.Y = _y;
+                this.ClassUniqu = "triangleHealth" + _index;
+                this.LifeTime = _lifeTime;
+                this.Type = "Health";//reserved
+                this.Radious = _radius;
+                this.Direction = _direction;
+                this.ClassType="";
+                this.Move = function () {
+                    //will move in virsual circle randomly.
+                }
+            } TriangleHealth.prototype = new BaseComponent;
+
+            //--------------------------- Container Object
+            var container = {
+                X: parseInt(($("#containerId").width()) / 2),
+                Y: parseInt(($("#containerId").height()) / 2),
+                radius: parseInt(($("#containerId").width()) / 2),
+
+            };
+
+            function Main() {
+            //$("#healthcircle").css("left", container.X).css("top", container.Y);
+            var sh = new SleepHealth(323, 323, 0, 15, 120, 1);
+            sh.Create();
+            }
+            Main();
+        });
+    </script>
+</body>
+</html>
