@@ -1,5 +1,5 @@
 ﻿
-$(document).ready(function () {
+
     
     //------------ BaseComponent Class
     function BaseComponent(_x, _y, _classUniqu, _lifeTime, _type, _radius, _direction) {

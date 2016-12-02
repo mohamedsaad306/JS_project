@@ -11,9 +11,7 @@
 <body>
     <div id="containerId" class="container" >
 
-        
-        
-        
+            
     </div>
 
     <script>
@@ -22,38 +20,36 @@
 
             //------------ BaseComponent Class
             function BaseComponent() {
-                this.Position = { "X":0, "Y": 0 };
-                this.ClassUniqu = "";        //ClassUniqu will represented in css as (<div class="classType_indexOfArrary">)
+                this.X = 0;
+                this.Y = 0;
+                this.Id = "";        //Id will represented in css as (<div id="classType_indexOfArrary">)
                 this.LifeTime = 1;
                 this.Type = ""; // (player,Enemy,Health) reserved
                 this.Radious = 0;
                 this.Direction = 0;    //1:clockwise   -1:anticlockwise    0:sleep
                 this.ClassType=""
                 this.Create = function () {
-                    //append to container new div  
-                    //css:classType(myship-movalbeEnemy-sleepHealth-...etc) depend on caller Object
-                    //classUniqu this.position in css
-                    debugger;
+                    console.log(this);
                     var newDiv = document.createElement("div");
-                    $(newDiv).css("class", this.ClassType).css("class", this.ClassUniqu); //add attr 'id' to new div
-                    newDiv.style.left = this.Position.X+"px";
-                    newDiv.style.top = this.Position.Y + "px";
+                    $(newDiv).attr("class", this.ClassType);
+                    $(newDiv).attr("id", this.Id);
+                    $(newDiv).css("left", (this.X));
+                    $(newDiv).css("top", (this.Y));
                     console.log(newDiv);
-                    document.getElementById("containerId").appendChild(newDiv);
-                    //$("#containerId").append(newDiv);
+                    $("#containerId").append(newDiv);
                 }
                 this.Destory = function () {
                     //delet object from memroy 
                     delete this;
-                    //remove div element by classUniqu
+                    //remove div element by Id
                 }
             }
 
             //--------------------------- MyShip Class
             function MyShip(_x, _y, _classUniqu, _id, _lifeTime, _type, _direction) {
-                this.Position.X = _x;
-                this.Position.Y = _y;
-                this.ClassUniqu = "myship";   //constant class in css
+                this.X = _x;
+                this.Y = _y;
+                this.Id = "myship";   //constant class in css
                 this.LifeTime = _lifeTime;
                 this.Type = "player"; //reserved
                 this.Radious = _radius;
@@ -67,9 +63,9 @@
             //--------------------------- Enemy Classes
             //-------------Sleep Enemy Class
             function SleepEnemy(_x, _y, _index, _lifeTime, _radius, _direction) {
-                this.Position.X = _x;
-                this.Position.Y = _y;
-                this.ClassUniqu = "sleepEnemy" + _index;
+                this.X = _x;
+                this.Y = _y;
+                this.Id = "sleepEnemy" + _index;
                 this.LifeTime = _lifeTime;
                 this.Type = "Enemy";//reserved
                 this.Radious = _radius;
@@ -83,7 +79,7 @@
             function MovableEnemy(_x, _y, _index, _lifeTime, _radius, _direction) {
                 this.Position.X = _x;
                 this.Position.Y = _y;
-                this.ClassUniqu = "movableEnemy" + _index;
+                this.Id = "movableEnemy" + _index;
                 this.LifeTime = _lifeTime;
                 this.Type = "Enemy";//reserved
                 this.Radious = _radius;
@@ -97,7 +93,7 @@
             function TrackerEnemy(_x, _y, _index, _lifeTime, _radius, _direction) {
                 this.Position.X = _x;
                 this.Position.Y = _y;
-                this.ClassUniqu = "trackerEnemy" + _index;
+               this.Id = "trackerEnemy" + _index;
                 this.LifeTime = _lifeTime;
                 this.Type = "Enemy";//reserved
                 this.Radious = _radius;
@@ -110,11 +106,11 @@
 
             //--------------------------- Health Classes
             //-------------Sleep Health Class
-            function SleepHealth(_x, _y, _index, _lifeTime, _radius, _direction) {
-                this.Position.X = _x;
-                this.Position.Y = _y;
-                this.ClassUniqu = "sleepHealth" + _index;
-                this.LifeTime = _lifeTime;
+            function SleepHealth(_x, _y, _index, _radius, _direction) {
+                this.X = _x;
+                this.Y = _y;
+                this.Id = "sleepHealth" + _index;
+                this.LifeTime = 15;
                 this.Type = "Health";//reserved
                 this.Radious = _radius;
                 this.Direction = 0;
@@ -125,9 +121,9 @@
             } SleepHealth.prototype = new BaseComponent;
             //-------------Movable Health Class
             function MovableHealth(_x, _y, _index, _lifeTime, _radius, _direction) {
-                this.Position.X = _x;
-                this.Position.Y = _y;
-                this.ClassUniqu = "movableHealth" + _index;
+                this.X = _x;
+                this.Y = _y;
+                this.Id = "movableHealth" + _index;
                 this.LifeTime = _lifeTime;
                 this.Type = "Health";//reserved
                 this.Radious = _radius;
@@ -139,9 +135,9 @@
             } MovableHealth.prototype = new BaseComponent;
             //-------------Triangle Health Class
             function TriangleHealth(_x, _y, _index, _lifeTime, _radius, _direction) {
-                this.Position.X = _x;
-                this.Position.Y = _y;
-                this.ClassUniqu = "triangleHealth" + _index;
+                this.X = _x;
+                this.Y = _y;
+                this.Id = "triangleHealth" + _index;
                 this.LifeTime = _lifeTime;
                 this.Type = "Health";//reserved
                 this.Radious = _radius;
@@ -157,13 +153,41 @@
                 X: parseInt(($("#containerId").width()) / 2),
                 Y: parseInt(($("#containerId").height()) / 2),
                 radius: parseInt(($("#containerId").width()) / 2),
-
+                CreatCenter: function () {
+                    var newDiv = document.createElement("div");
+                    $(newDiv).attr("class","divCenter");
+                    $(newDiv).attr("id", "idDivCenter");
+                    $(newDiv).css("left", (this.X - 38));
+                    $(newDiv).css("top", (this.Y - 38));
+                    $("#containerId").append(newDiv);
+                },
+                DetectCollision: function () {
+                    //here where conatainer detect if collision happen or not
+                }
             };
+            //--------------- Get random Point in Circle
+            function GetRandomPoint(centerX, centerY,MaxRadius,MinRadius) {
+                var x, y;
+                do {
+                    var x = GetRandomNumber(centerX - MaxRadius, centerX + MaxRadius);
+                    var y = GetRandomNumber(centerY - MaxRadius, centerY + MaxRadius);
+                    var distance = Math.sqrt(Math.pow((centerX - x), 2) + Math.pow((centerY - y), 2));//distance between point and center
+                } while (distance > MaxRadius || distance < MinRadius);
+                return { X: x, Y: y };
+            }
+            function GetRandomNumber(min, max) {
+                return Math.floor(Math.random() * (max - min) + min);       //min (inclusive) and max (exclusive)
+            }
 
+            //--------------------------Main
             function Main() {
-            //$("#healthcircle").css("left", container.X).css("top", container.Y);
-            var sh = new SleepHealth(323, 323, 0, 15, 120, 1);
-            sh.Create();
+                container.CreatCenter();
+
+                for (var i = 0; i < 5; i++) {
+                    var pos = GetRandomPoint(container.X, container.Y, container.radius - 30, container.radius - 232);
+                    var p1 = new SleepHealth(pos.X, pos.Y, 1, 20, 1);
+                    p1.Create();
+                }
             }
             Main();
         });
