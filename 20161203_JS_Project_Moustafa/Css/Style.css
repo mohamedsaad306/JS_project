@@ -1,0 +1,370 @@
+﻿body {
+    background-color: #093d5b;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.point {
+    position: absolute;
+    top: 2%;
+    left: 26%;
+}
+
+.health {
+    background-color: greenyellow;
+    box-shadow: 0px 0px 7px greenyellow;
+}
+
+.destroy {
+    background-color: red;
+    box-shadow: 0px 0px 7px red;
+}
+
+.circle {
+    position: absolute;
+    top: 33%;
+    left: 33%;
+    margin: 7px;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50px;
+    -webkit-animation: circleEffect 2s linear infinite;
+    animation: circleEffect 2s linear infinite;
+}
+
+@-webkit-keyframes circleEffect {
+    0% {
+        width: 23px;
+        height: 25px;
+    }
+
+    25% {
+        width: 25px;
+        height: 23px;
+    }
+
+    50% {
+        width: 23px;
+        height: 25px;
+    }
+
+    75% {
+        width: 25px;
+        height: 23px;
+    }
+
+    100% {
+        width: 23px;
+        height: 25px;
+    }
+}
+
+@keyframes circleEffect {
+    0% {
+        width: 23px;
+        height: 25px;
+    }
+
+    25% {
+        width: 25px;
+        height: 23px;
+    }
+
+    50% {
+        width: 23px;
+        height: 25px;
+    }
+
+    75% {
+        width: 25px;
+        height: 23px;
+    }
+
+    100% {
+        width: 23px;
+        height: 25px;
+    }
+}
+
+.cross {
+    position: absolute;
+    top: 10%;
+    left: 70%;
+    margin: 7px;
+    display: inline-block;
+    width: 12px;
+    height: 24px;
+    border-radius: 50%;
+    -webkit-animation: rotation 7000s linear infinite alternate;
+    animation: rotation 7000s linear infinite alternate;
+}
+
+    .cross:after {
+        background: inherit;
+        content: "";
+        height: 12px;
+        left: -6px;
+        position: absolute;
+        top: 6px;
+        width: 24px;
+        border-radius: inherit;
+        box-shadow: inherit;
+    }
+
+.healthTriangle {
+    position: absolute;
+    top: 70%;
+    left: 46%;
+    margin: 7px;
+    display: inline-block;
+    padding-top: 2px;
+    width: 38px;
+    height: 20px;
+    overflow: hidden;
+    box-shadow: 0 5px 7px -5px greenyellow;
+}
+
+    .healthTriangle:after {
+        content: "";
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        background: greenyellow;
+        transform: rotate(45deg);
+        top: 7px;
+        left: 7px;
+        border-radius: 20%;
+        box-shadow: 0px 0px 7px 0px greenyellow;
+        -webkit-animation: circleEffect 2s linear infinite;
+        animation: circleEffect 2s linear infinite;
+    }
+
+.burst {
+    margin: 7px;
+    display: inline-block;
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    top: 65%;
+    left: 16%;
+    -webkit-transform: rotate(20deg);
+    -moz-transform: rotate(20deg);
+    -ms-transform: rotate(20deg);
+    -o-transform: rotate(20eg);
+    -webkit-animation: rotation 200s linear infinite alternate;
+    animation: rotation 200s linear infinite alternate;
+}
+
+@-webkit-keyframes rotation {
+    to {
+        transform: rotate(999999deg);
+    }
+}
+
+@keyframes rotation {
+    to {
+        transform: rotate(999999deg);
+    }
+}
+
+.burst:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 17px;
+    width: 17px;
+    box-shadow: inherit;
+    background-color: inherit;
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    -o-transform: rotate(135deg);
+}
+
+.rocket {
+    margin: 7px;
+    display: inline-block;
+    width: 6px;
+    height: 24px;
+    border-radius: 50%;
+    position: absolute;
+    top: 45%;
+    left: 80%;
+}
+
+    .rocket:before {
+        content: "";
+        position: absolute;
+        top: 12px;
+        left: -10px;
+        margin: 7px;
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        box-shadow: 0px -5px 1px 2px red;
+    }
+
+.base {
+    margin: 7px;
+    display: inline-block;
+    position: absolute;
+    top: 39%;
+    left: 49%;
+    width: 12px;
+    height: 12px;
+    transform: rotate(45deg);
+    border-radius: 20%;
+    border-bottom-right-radius: 50%;
+}
+
+    .base:before {
+        content: "";
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        box-shadow: 0px -4px 1px 2px red;
+        transform: rotate(-45deg);
+    }
+
+.curve {
+    position: fixed;
+    top: 11px;
+    left: 306px;
+    width: 646px;
+    height: 890px;
+    box-shadow: rgb(42, 125, 221) 0px -40px 20px -40px;
+    border-width: 50px;
+    border-style: solid;
+    border-image: initial;
+    border-color: rgb(42, 125, 178) transparent transparent;
+    border-radius: 48%;
+}
+
+.PlaygroundParent {
+    position: relative;
+    background-color: #06375d;
+    width: 624px;
+    height: 624px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 25px #7AAAFF, 0px 0px 25px 0px #7AAAFF;
+    border: 5px solid #f9fffe;
+}
+
+    .PlaygroundParent:before {
+        content: "";
+        position: absolute;
+        left: 45px;
+        top: 45px;
+        width: 534px;
+        height: 534px;
+        border-radius: 50%;
+        box-shadow: 0px 0px 0px 2px #0e3e62;
+    }
+
+    .PlaygroundParent > .PlaygroundChild {
+        position: absolute;
+        left: 90px;
+        top: 90px;
+        background-color: #0e4c7d;
+        width: 444px;
+        height: 444px;
+        border-radius: 50%;
+        box-shadow: inset 0 0 9px #205c91, 0px 0px 3px 3px #3e7aab;
+    }
+
+        .PlaygroundParent > .PlaygroundChild::before {
+            content: "";
+            position: absolute;
+            left: 35px;
+            top: 35px;
+            width: 374px;
+            height: 374px;
+            border-radius: 50%;
+            box-shadow: 0px 0px 0px 2px #125082;
+        }
+
+        .PlaygroundParent > .PlaygroundChild::after {
+            content: "";
+            position: absolute;
+            left: 70px;
+            top: 70px;
+            width: 304px;
+            height: 304px;
+            border-radius: 50%;
+            box-shadow: 0px 0px 0px 2px #125082;
+        }
+
+        .PlaygroundParent > .PlaygroundChild > .PlaygroundGrandChild {
+            position: absolute;
+            left: 105px;
+            top: 105px;
+            background-color: #2d74aa;
+            width: 234px;
+            height: 234px;
+            border-radius: 50%;
+            box-shadow: inset 0 0 9px #4689c1, 0px 0px 3px 3px #5c9bd8;
+        }
+
+            .PlaygroundParent > .PlaygroundChild > .PlaygroundGrandChild::before {
+                content: "";
+                position: absolute;
+                left: 25px;
+                top: 25px;
+                width: 184px;
+                height: 184px;
+                border-radius: 50%;
+                box-shadow: 0px 0px 0px 2px #387cb4;
+            }
+
+            .PlaygroundParent > .PlaygroundChild > .PlaygroundGrandChild::after {
+                content: "";
+                position: absolute;
+                left: 50px;
+                top: 50px;
+                width: 134px;
+                height: 134px;
+                border-radius: 50%;
+                box-shadow: 0px 0px 0px 2px #387cb4;
+            }
+
+            .PlaygroundParent > .PlaygroundChild > .PlaygroundGrandChild > .PlaygroundDestroy {
+                position: absolute;
+                left: 75px;
+                top: 75px;
+                width: 84px;
+                height: 84px;
+                border-radius: 50%;
+                box-shadow: 0px 0px 0px 2px #518dc4;
+            }
+
+                .PlaygroundParent > .PlaygroundChild > .PlaygroundGrandChild > .PlaygroundDestroy::before {
+                    content: "";
+                    position: absolute;
+                    left: 15px;
+                    top: 15px;
+                    background-color: #e40002;
+                    width: 54px;
+                    height: 54px;
+                    border-radius: 50%;
+                    box-shadow: inset 0 0 9px #980021, 0px 0px 3px 3px #9f001d;
+                }
+
+                .PlaygroundParent > .PlaygroundChild > .PlaygroundGrandChild > .PlaygroundDestroy::after {
+                    content: "";
+                    position: absolute;
+                    left: 30px;
+                    top: 30px;
+                    background-color: #a80003;
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 50%;
+                    box-shadow: inset 0 0 9px #aa0001, 0px 0px 3px 3px #9f001d;
+                }
