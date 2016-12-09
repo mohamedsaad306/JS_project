@@ -52,7 +52,7 @@
                         $(newDiv).css("top", (this.Y));
                         //for Demo: Delete object and element when hover it
                         $(newDiv).on("mouseover", function () {
-                            console.log("position of deleted Object X: " + $(this).position().left + " Y: " + $(this).position().top);
+                            console.log("position of deleted Object X: " + parseInt($(this).position().left) + " Y: " + parseInt($(this).position().top));
                             var id = $(this).attr("id");
                             var objectType = id.split("_");
                             switch (objectType[0]) {
@@ -211,9 +211,8 @@
                             // direction = 1 for clockwise, -1 for counterclockwise
                             direction: 1,
                             // startPosition can be a degree angle
-                            // (0 = right, 90 = top, 180 = left, 270 = bottom)
-                            startPositionDeg: 90,
-
+                            // (0:360) random degree angle 
+                            startPositionDeg: GetRandomNumber(0,360),
                             // when raius reduce to 20 it will stop
                             stopRadius: 20,
                             // Time for complete one circle
@@ -378,7 +377,7 @@
 
                     }
                 };
-
+                
 
                 //-----------------------------------------------------help Functions
                 //--------------- Get random Point in Circle
@@ -439,38 +438,35 @@
                             startTime = (new Date()).getTime(),
                             width = el.offsetWidth,
                             height = el.offsetHeight;
-                        el.style.position = settings.cssPosition || 'absolute';
+                        //el.style.position = settings.cssPosition || 'absolute';
                         if (!settings.startPositionRad) settings.startPositionRad = settings.startPositionDeg / 180 * Math.PI;
 
                         // -----------  ----------------- circle move every 50 ms
-                        intervalCircleMove = setInterval(function () {
+                        el['intervalCircleMove'] = setInterval(function () {
                             var pos = getPosition(settings, (new Date()).getTime() - startTime);
-
-                            el.style.left = (pos.x - Math.round(width / 2)) + 'px';
-                            el.style.top = (pos.y - Math.round(height / 2)) + 'px';
+                            var x=pos.x - Math.round(width / 2);
+                            var y=pos.y - Math.round(height / 2);
+                            el.style.left = x + 'px';
+                            el.style.top = y + 'px';
+                            obj.X = x;
+                            obj.Y = y;
                         }, settings.updateInterval);
 
                         // -----------  -----------------  speral move set interval every 2000 ms
-                        intervalSperal = setInterval(function () {
+                        el['intervalSperal'] = setInterval(function () {
                             if (settings.radius < settings.stopRadius) {
-                               // debugger;
-                                //stop();
-                                clearInterval(intervalSperal);
-                                clearInterval(intervalCircleMove);
-                                obj.Destroy();
-                                
-                                //obj = "del";
+                                stopIntervals(el);
+                                obj.Radious = settings.radius;
+                                //console.log(obj);
                             } else {
-                            settings.radius--;
+                                settings.radius--;
                             }
-                            console.log(settings.radius);
+                            //console.log(settings.radius);
                         }, settings.intervalSperal);
                     }
-                    function stop() {
-                        //debugger;
-                        
-                        
-
+                    function stopIntervals(el) {
+                        clearInterval(el['intervalSperal']);
+                        clearInterval(el['intervalCircleMove']);
                     }
                     return {
                         start: start
@@ -479,7 +475,7 @@
                 //------------end moving functions
 
 
-                //------------------------------------------Objects Functionality
+                //-----------------------------------Objects Functionality
                 //
                 //-------------------My Ship Object
                 function CreateMyShip(noOfShip) {
@@ -535,11 +531,10 @@
                 //--------Movable health Objects
                 function CreateMovableHealthObject(index) {
                     //get Random Point X , Y in Circle With maxRadius and minRadius
-                    //40: width of object no paypass circle ,90: this object appear in Outer Orbit
-                    var pos = GetRandomPoint(container.X, container.Y, container.radius - 40, container.radius - 90);
+                    //10: width of object no paypass circle ,50: this object appear in Outer Orbit
+                    var pos = GetRandomPoint(container.X, container.Y, container.radius - 10, container.radius - 50);
                     var obj = new MovableHealth(pos.X, pos.Y, index, pos.Radius, 1);
                     obj.Create();
-                    debugger;
                     obj.Move();
                     return obj;
                 }
@@ -562,7 +557,6 @@
                         movableHealthArray[i].Radious--;
                         //check if radius less radius of Center Object destroy this Object :20 for demo
                         if (movableHealthArray[i].Radious <= 20) {
-                            debugger;
                             movableHealthArray[i].Destroy();      //destroy this object
                             movableHealthArray[i] = CreateMovableHealthObject(i);//Create new Object in same index
                         } else if (movableHealthArray[i] == "del") {
@@ -699,7 +693,7 @@
 
                 //-----------------------------------------StartGame
                 //
-                //start interval by Second
+                //start interval by one Second
                 //decrease sessionTime--
                 //decrease LifeTime for ALL objectS in container every interval
                 //stop game when session time get to 0
@@ -711,39 +705,43 @@
                         //--------------------handle Life Time for each Object Every Interval
                         if (level == 1) {
                             //-------Sleep health:4
-                            ManageSleepHealthObjects(4);
+                            //ManageSleepHealthObjects(4);
 
                             //-------Sleep Enmey:2
-                            ManageSleepEnemyObjects(2);
+                            // ManageSleepEnemyObjects(2);
+
+
+                            //for deomoo
+                            ManageMovableHealthObjects(3);
 
                         } else if (level == 2) {
                             //-------Sleep health:3
-                            ManageSleepHealthObjects(3);
+                            //ManageSleepHealthObjects(3);
 
                             //------- Movable health:3
                             ManageMovableHealthObjects(3);
 
                             //------- Triangle health:2
-                            ManageTriangleHealthObjects(2);
+                            //ManageTriangleHealthObjects(2);
 
                             //-------- Movable Enemy:3
-                            ManageMovableEnemyObjects(3);
+                            //ManageMovableEnemyObjects(3);
 
                             //-------Sleep Enmey:Delete sleep Enemy (argu=0 )
-                            ManageSleepEnemyObjects(0);
+                            //ManageSleepEnemyObjects(0);
 
                         } else if (level == 3) {
                             //-------Sleep health:2
-                            ManageSleepHealthObjects(2);
+                            //ManageSleepHealthObjects(2);
 
                             //------- Movable health:2
                             ManageMovableHealthObjects(2);
 
                             //------- Triangle health:3
-                            ManageTriangleHealthObjects(3);
+                           // ManageTriangleHealthObjects(3);
 
                             //-------- Movable Enemy:4
-                            ManageMovableEnemyObjects(4);
+                           // ManageMovableEnemyObjects(4);
 
                         } else {
                             console.log("error : level is 0 or some thing");
