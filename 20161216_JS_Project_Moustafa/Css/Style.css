@@ -426,6 +426,7 @@ body {
     height: 35px;
     background-color: #6b1b1b;
     border-radius: 3px;
+    box-shadow: 0px 0px 7px 3px white;
     animation: rotation 7s linear infinite alternate;
 }
 
@@ -438,6 +439,7 @@ body {
         height: 100%;
         background-color: #f1f1f1;
         border-radius: 3px;
+        box-shadow: 0px 0px 3px 2px #555555;
         -webkit-transform: rotate(60deg);
         -moz-transform: rotate(60deg);
         -ms-transform: rotate(60deg);
@@ -453,6 +455,7 @@ body {
         height: 100%;
         background-color: #555555;
         border-radius: 3px;
+        box-shadow: 0px 0px 1px 1px brown;
         -webkit-transform: rotate(30deg);
         -moz-transform: rotate(30deg);
         -ms-transform: rotate(30deg);
